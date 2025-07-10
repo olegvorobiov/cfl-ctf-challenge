@@ -7,7 +7,7 @@
 
 **CLASSIFICATION:** URGENT
 
-A rogue development team has deployed a compromised container infrastructure protected by NeuVector. Intelligence suggests they've hidden a critical vulnerability in their runtime protection configuration - one that could allow unauthorized code execution.
+A Voidbringer unit has deployed a compromised container infrastructure protected by NeuVector. Intelligence suggests they've hidden a critical vulnerability in their runtime protection configuration - one that could allow unauthorized code execution.
 
 Your mission, should you choose to accept it, is to:
 
@@ -72,7 +72,10 @@ Your mission, should you choose to accept it, is to:
 ### 5. Try these commands now
 ## Flag
 ## Hints
-
+* -5 points for hint 1. Deploy Farm Services
+* -5 points for 2. Configure Network and Process rules
+* -10 points for flags first word 
+* -10 points for flags second word 
 
 
 | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port | Allowed |
