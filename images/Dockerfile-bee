@@ -1,0 +1,15 @@
+FROM registry.suse.com/bci/bci-base:15.6
+
+RUN zypper refresh && \
+    zypper install -y \
+    nginx \
+    wget \
+    && zypper clean -a
+
+RUN echo "Buzz buzz! I'm bee-sy pollinating your requests across the tree farm. Sweet as honey, fast as a hive!" > /srv/www/htdocs/index.html
+
+EXPOSE 8000
+
+RUN sed -i 's/listen       80;/listen       8000;/' /etc/nginx/nginx.conf
+
+CMD ["nginx", "-g", "daemon off;"]

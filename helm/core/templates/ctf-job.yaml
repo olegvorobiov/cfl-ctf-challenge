@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ctf-setup-neuvector
+  namespace: {{ .Release.Namespace }}
+spec:
+  template:
+    spec:
+      containers:
+      - name: run-script
+        image: olegvorobyov90/leap-jq-curl-kubectl:0.1
+        command: ["/bin/bash", "/scripts/script.sh"]
+        volumeMounts:
+        - name: script-volume
+          mountPath: /scripts
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: script-volume
+        configMap:
+          name: ctf-job-script
+      serviceAccountName: ctf-job-sa
+  backoffLimit: 1

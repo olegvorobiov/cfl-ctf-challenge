@@ -1,0 +1,99 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chicken
+  namespace: farmyard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chicken
+  template:
+    metadata:
+      labels:
+        app: chicken
+    spec:
+      containers:
+      - name: chicken
+        image: olegvorobyov90/kubeconna2024-chicken:v0.4
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sheep
+  namespace: warmfield
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sheep
+  template:
+    metadata:
+      labels:
+        app: sheep
+    spec:
+      containers:
+      - name: sheep
+        image: olegvorobyov90/kubeconna2024-sheep:v0.4
+    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cow
+  namespace: warmfield
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cow
+  template:
+    metadata:
+      labels:
+        app: cow
+    spec:
+      containers:
+      - name: cow
+        image: olegvorobyov90/kubeconna2024-cow:v0.4
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bee
+  namespace: treefarm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bee
+  template:
+    metadata:
+      labels:
+        app: bee
+    spec:
+      containers:
+      - name: bee
+        image: olegvorobyov90/kubeconna2024-bee:v0.4
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit
+  namespace: charmland
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit
+  template:
+    metadata:
+      labels:
+        app: rabbit
+    spec:
+      containers:
+      - name: rabbit
+        image: olegvorobyov90/kubeconna2024-rabbit:v0.4

@@ -1,0 +1,189 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: farmyard
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: warmfield
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: treefarm
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: charmland
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chicken
+  namespace: farmyard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chicken
+  template:
+    metadata:
+      labels:
+        app: chicken
+    spec:
+      containers:
+      - name: chicken
+        image: olegvorobyov90/challenge-chicken:0.1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sheep
+  namespace: warmfield
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sheep
+  template:
+    metadata:
+      labels:
+        app: sheep
+    spec:
+      containers:
+      - name: sheep
+        image: olegvorobyov90/challenge-sheep:0.1
+    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cow
+  namespace: warmfield
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cow
+  template:
+    metadata:
+      labels:
+        app: cow
+    spec:
+      containers:
+      - name: cow
+        image: olegvorobyov90/challenge-cow:0.1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bee
+  namespace: treefarm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bee
+  template:
+    metadata:
+      labels:
+        app: bee
+    spec:
+      containers:
+      - name: bee
+        image: olegvorobyov90/challenge-bee:0.1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit
+  namespace: charmland
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit
+  template:
+    metadata:
+      labels:
+        app: rabbit
+    spec:
+      containers:
+      - name: rabbit
+        image: olegvorobyov90/challenge-rabbit:0.1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chicken-svc
+  namespace: farmyard
+spec:
+  selector:
+    app: chicken
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sheep-svc
+  namespace: warmfield
+spec:
+  selector:
+    app: sheep
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cow-svc
+  namespace: warmfield
+spec:
+  selector:
+    app: cow
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 8090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bee-svc
+  namespace: treefarm
+spec:
+  selector:
+    app: bee
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit-svc
+  namespace: charmland
+spec:
+  selector:
+    app: rabbit
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

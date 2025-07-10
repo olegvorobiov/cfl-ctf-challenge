@@ -1,0 +1,15 @@
+FROM registry.suse.com/bci/bci-base:15.6
+
+RUN zypper refresh && \
+    zypper install -y \
+    nginx \
+    wget \
+    && zypper clean -a
+
+RUN echo "Moooo-ving your data through the warm fields! Don't have a cow - your requests are in good hooves!" > /srv/www/htdocs/index.html
+
+EXPOSE 8090
+
+RUN sed -i 's/listen       80;/listen       8090;/' /etc/nginx/nginx.conf
+
+CMD ["nginx", "-g", "daemon off;"]

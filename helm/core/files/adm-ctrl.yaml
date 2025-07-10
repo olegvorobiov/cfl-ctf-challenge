@@ -1,0 +1,76 @@
+apiVersion: neuvector.com/v1
+kind: NvAdmissionControlSecurityRule
+metadata:
+  name: local
+spec:
+  rules:
+  - action: deny
+    comment: Deny default namespace
+    containers:
+    - containers
+    criteria:
+    - name: namespace
+      op: containsAny
+      path: namespace
+      value: default
+    disabled: false
+    rule_mode: protect
+  - action: deny
+    comment: Deny if more than 20 High CVEs with fix
+    containers:
+    - containers
+    criteria:
+    - name: cveHighWithFixCount
+      op: '>='
+      path: cveHighWithFixCount
+      sub_criteria:
+      - name: publishDays
+        op: '>='
+        value: "30"
+      value: "20"
+    disabled: false
+    rule_mode: protect
+  - action: deny
+    comment: Deny if more than 60 Medium CVEs
+    containers:
+    - containers
+    criteria:
+    - name: cveMediumCount
+      op: '>='
+      path: cveMediumCount
+      value: "60"
+    disabled: false
+    rule_mode: protect
+  - action: deny
+    comment: Image have to be scanned
+    containers:
+    - containers
+    criteria:
+    - name: imageScanned
+      op: =
+      path: imageScanned
+      value: "false"
+    disabled: false
+    rule_mode: protect
+  - action: deny
+    comment: Deny these CVE names
+    containers:
+    - containers
+    criteria:
+    - name: cveNames
+      op: containsAny
+      path: cveNames
+      value: CVE-2023-27524,CVE-2023-38408,CVE-2023-38545,CVE-2023-5217,CVE-2023-4863
+    disabled: false
+    rule_mode: protect
+  - action: deny
+    comment: All of the images have to come from this registry https://registry.hub.docker.com/
+    containers:
+    - containers
+    criteria:
+    - name: imageRegistry
+      op: notContainsAny
+      path: imageRegistry
+      value: https://registry.hub.docker.com/
+    disabled: false
+    rule_mode: protect

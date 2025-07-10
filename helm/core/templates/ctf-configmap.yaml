@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ctf-job-script
+  namespace: {{ .Release.Namespace }}
+data:
+  script.sh: |
+    {{- $script := .Files.Get "files/ctf-setup.sh" }}
+    {{- tpl $script . | nindent 4 }}
+
+  rules.yaml: |
+    {{- $script := .Files.Get "files/adm-ctrl.yaml" }}
+    {{- tpl $script . | nindent 4 }}
