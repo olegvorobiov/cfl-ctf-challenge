@@ -60,7 +60,8 @@ Your mission, should you choose to accept it, is to:
 * Install git based on your operating system - https://git-scm.com/downloads.
 ## Setup
 ### Clone the Challenge repo
-* ```git clone https://github.com/olegvorobiov/cfl-ctf-challenge.git```
+1. ```git clone https://github.com/olegvorobiov/cfl-ctf-challenge.git```
+2. change directory inside the clonned repo: `cd cfl-ctf-challenge`
 ### Deploy modded NeuVector chart
 1. Install ingress-nginx
 
