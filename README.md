@@ -48,9 +48,13 @@ Your mission, should you choose to accept it, is to:
 2. Additional configuration for Rancher Desktop:
 
     a. Ensure to select a stable version
+    
     ![rd1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/rd1.png)
+    
     b. Disable Traefik
+    
     ![rd2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/rd2.png)
+    
     c. Restart Rancher Desktop
 ### git
 * Install git based on your operating system - https://git-scm.com/downloads.
@@ -70,7 +74,8 @@ Your mission, should you choose to accept it, is to:
 
     ```helm install nv -n nv --create-namespace ./helm/core -f ./helm/core/values.yaml --set manager.ingress.host="nv.rd.localhost"```
 4. After installation navigate to Rancher Desktop, go to Port Forwarding and find the webui service and forward it to a port of your choice.
-![rd3](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/rd3.png)
+
+    ![rd3](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/rd3.png)
 5. Open your favorite browser and navigate to https://nv.rd.localhost:[portForward-number]
 ## Challenges
 ### 1. Deploy Farm Services
