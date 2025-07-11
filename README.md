@@ -63,6 +63,9 @@ Your mission, should you choose to accept it, is to:
 1. ```git clone https://github.com/olegvorobiov/cfl-ctf-challenge.git```
 2. change directory inside the clonned repo: `cd cfl-ctf-challenge`
 ### Deploy modded NeuVector chart
+
+**NOTE:** before proceeding, ensure that your *kubecontext* is configured to talk to Rancher Desktop cluster.
+
 1. Install ingress-nginx
 
     ```helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace --version 4.11.2```
@@ -84,6 +87,8 @@ Your mission, should you choose to accept it, is to:
     * **Password:** `admin`
 ## Challenges
 ### 1. Deploy Farm Services
+
+**NOTE:** Do not temper with Admission Control Rules themsleves, rather make sure that NeuVector allows that deployment to pass. See the logs.
 
 * Run: ```kubectl apply -f farm-services.yaml```
 * Ensure the workloads are being deployed successfully
