@@ -49,11 +49,11 @@ Your mission, should you choose to accept it, is to:
 
     a. Ensure to select a stable version
     
-    ![rd1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/rd1.png)
+    ![rd1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd1.png)
     
     b. Disable Traefik
     
-    ![rd2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/rd2.png)
+    ![rd2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd2.png)
     
     c. Restart Rancher Desktop
 ### git
@@ -75,7 +75,7 @@ Your mission, should you choose to accept it, is to:
     ```helm install nv -n nv --create-namespace ./helm/core -f ./helm/core/values.yaml --set manager.ingress.host="nv.rd.localhost"```
 4. After installation navigate to Rancher Desktop, go to Port Forwarding and find the webui service and forward it to a port of your choice.
 
-    ![rd3](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/rd3.png)
+    ![rd3](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd3.png)
 5. Open your favorite browser and navigate to https://nv.rd.localhost:[portForward-number]
 ## Challenges
 ### 1. Deploy Farm Services
@@ -100,7 +100,7 @@ Your mission, should you choose to accept it, is to:
     | bee             | treefarm        | rabbit            | charmland             | 8080 | V |
 
     Refer to a diagram below for graphical representation:
-    ![Diagram1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/diagram1.png)
+    ![Diagram1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram1.png)
 2. Switch the groups into a Protect/Protect mode and now try some of these commands:
 * Cow should not be able to talk to sheep:
 
@@ -136,7 +136,7 @@ Your mission, should you choose to accept it, is to:
     | rabbit              | charmland             | goat| alarmzone           | 8010  | V |
 
     Refer to a diagram below for graphical representation:
-    ![Diagram2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/diagram2.png)
+    ![Diagram2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram2.png)
 2. Switch al of the groups filtered by `arm` into a Protect/Protect mode.
 ### 5. Observe the differences
 **At this point all of the groups that filtered by `arm` should be in Protect/Protect mode.**
