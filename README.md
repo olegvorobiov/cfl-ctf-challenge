@@ -87,7 +87,7 @@ Your mission, should you choose to accept it, is to:
     | bee             | treefarm        | rabbit            | charmland             | 8080 | V |
 
     Refer to a diagram below for graphical representation:
-    ![Diagram1](https://github.com/oleg-vorobiov-suse/zero-trust-task/blob/master/neuvector_task.png)
+    ![Diagram1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/diagram1.png)
 2. Switch the groups into a Protect/Protect mode and now try some of these commands:
 * Cow should not be able to talk to sheep:
 
@@ -123,7 +123,7 @@ Your mission, should you choose to accept it, is to:
     | rabbit              | charmland             | goat| alarmzone           | 8010  | V |
 
     Refer to a diagram below for graphical representation:
-    ![Diagram2](https://github.com/oleg-vorobiov-suse/zero-trust-task/blob/master/neuvector_task.png)
+    ![Diagram2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/diagram2.png)
 2. Switch al of the groups filtered by `arm` into a Protect/Protect mode.
 ### 5. Observe the differences
 **At this point all of the groups that filtered by `arm` should be in Protect/Protect mode.**
