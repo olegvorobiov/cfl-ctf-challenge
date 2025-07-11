@@ -77,6 +77,10 @@ Your mission, should you choose to accept it, is to:
 
     ![rd3](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd3.png)
 5. Open your favorite browser and navigate to https://nv.rd.localhost:[portForward-number]
+
+    Default login:
+    * **Username:** `admin`
+    * **Password:** `admin`
 ## Challenges
 ### 1. Deploy Farm Services
 
