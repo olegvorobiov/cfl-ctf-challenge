@@ -1,0 +1,15 @@
+FROM registry.access.redhat.com/ubi9/ubi:9.6
+
+RUN dnf update -y && \
+    dnf install -y \
+    nginx \
+    wget \
+    && dnf clean all
+
+RUN echo "Oink oink! Red alert in the alarm zone - but don't worry, I'm not squealing on your requests!" > /usr/share/nginx/html/index.html
+
+EXPOSE 5050
+
+RUN sed -i 's/listen       80;/listen       5050;/' /etc/nginx/nginx.conf
+
+CMD ["nginx", "-g", "daemon off;"]

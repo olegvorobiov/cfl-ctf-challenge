@@ -31,14 +31,14 @@ spec:
     disabled: false
     rule_mode: protect
   - action: deny
-    comment: Deny if more than 60 Medium CVEs
+    comment: Deny if more than 150 Medium CVEs
     containers:
     - containers
     criteria:
     - name: cveMediumCount
       op: '>='
       path: cveMediumCount
-      value: "60"
+      value: "150"
     disabled: false
     rule_mode: protect
   - action: deny

@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alarmzone
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pig-svc
+  namespace: alarmzone
+spec:
+  selector:
+    app: pig
+  ports:
+    - protocol: TCP
+      port: 5050
+      targetPort: 5050
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goat-svc
+  namespace: alarmzone
+spec:
+  selector:
+    app: goat
+  ports:
+    - protocol: TCP
+      port: 8010
+      targetPort: 8010
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pig
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pig
+  template:
+    metadata:
+      labels:
+        app: pig
+    spec:
+      containers:
+      - name: pig
+        image: olegvorobyov90/challenge-pig:0.1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goat
+  template:
+    metadata:
+      labels:
+        app: goat
+    spec:
+      containers:
+      - name: goat
+        image: olegvorobyov90/challenge-goat:0.3

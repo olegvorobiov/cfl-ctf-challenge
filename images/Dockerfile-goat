@@ -1,0 +1,25 @@
+FROM alpine:3.22
+
+RUN apk update && \
+    apk add --no-cache \
+    nginx \
+    wget
+
+RUN echo "Meh-eh-eh! I'm the G.O.A.T. of alarm handling - no need to panic, I've got your requests covered!" > /var/lib/nginx/html/index.html
+
+EXPOSE 8010
+
+# Overwrite default nginx config to listen on port 8010 and serve index.html
+RUN cat <<EOF > /etc/nginx/http.d/default.conf
+server {
+    listen 8010;
+    server_name localhost;
+    location / {
+        root /var/lib/nginx/html;
+        index index.html;
+    }
+}
+EOF
+
+
+CMD ["nginx", "-g", "daemon off;"]

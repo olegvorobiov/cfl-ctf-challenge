@@ -51,7 +51,7 @@ Your mission, should you choose to accept it, is to:
 * Install git based on your operating system - https://git-scm.com/downloads.
 ## Setup
 ### Clone the Challenge repo
-* ```git clone ...```
+* ```git clone https://github.com/olegvorobiov/cfl-ctf-challenge.git```
 ### Deploy modded NeuVector chart
 1. Install ingress-nginx
 
@@ -66,35 +66,100 @@ Your mission, should you choose to accept it, is to:
     ```helm install nv -n nv --create-namespace ./helm/core -f ./helm/core/values.yaml --set manager.ingress.host="nv.rd.localhost"```
 ## Challenges
 ### 1. Deploy Farm Services
+
+* Run: ```kubectl apply -f farm-services.yaml```
+* Ensure the workloads are being deployed successfully
+
 ### 2. Configure Network and Process rules
+1. Given the table below use your kubernetes knowledge to create these Network connections. You should not execute inside the pod. `curl` and `wget` are available within all of the pods. 
+    
+    **FREE HINT:** To filter only the groups related to this challenge type `arm` in filter box.
+
+    | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port | Allowed |
+    |:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
+    | chicken              | farmyard             | sheep            | warmfield          | 9000 | V |
+    | chicken              | farmyard             | suse.com (external)|                 | 443  | V |
+    | chicken              | farmyard             | any other site (external)|               | 443  | X |
+    | sheep            | warmfield          | chicken              | farmyard             | 5000 | V |
+    | sheep            | warmfield          | cow              | warmfield          | 8090 | V |
+    | cow              | warmfield          | bee             | treefarm        | 8000 | V |
+    | bee             | treefarm        | cow              | warmfield          | 8090 | V |
+    | bee             | treefarm        | rabbit            | charmland             | 8080 | V |
+
+    Refer to a diagram below for graphical representation:
+    ![Diagram1](https://github.com/oleg-vorobiov-suse/zero-trust-task/blob/master/neuvector_task.png)
+2. Switch the groups into a Protect/Protect mode and now try some of these commands:
+* Cow should not be able to talk to sheep:
+
+    `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=cow -o jsonpath='{.items[*].metadata.name}') -- curl sheep-svc.warmfield.svc.cluster.local:9000 --max-time 5`
+* You should not be able to execute in any of the pods. Example for bee:
+
+    `kubectl exec -it --namespace treefarm $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') -- bash`
+* Rabbit should not be able to talk to bee.
+
+    `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- curl bee-svc.treefarm.svc.cluster.local:8000 --max-time 5`
+    
+    **Oops - rabbit pod doesn't have `curl` in allow list. That is why it failed.**
+* Chicken should be only able to communicate with suse.com, and not any other outside service. If you weren't able to accomplish this - don't worry it doesn't affect the end goal :-)
+
+    `kubectl exec -it --namespace farmyard $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') -- curl https://google.com --max-time 5`
+
+
 ### 3. Deploy a second set of workloads
+
+* Run: ```kubectl apply -f addon-services.yaml```
+* Ensure the workloads are being deployed successfully
+
 ### 4. Configure Network and Process rules
-### 5. Try these commands now
+1. Given the table below use your kubernetes knowledge to create these Network connections. You should not execute inside the pod. `curl` and `wget` are available within all of the pods. See the additional rules in the table below.
+
+    **GOOD TO KNOW:** Despite the fact that the farm-services groups are in Protect/Protect mode, the new Network Rules are not still being learned, but allowed to be executed, because NeuVector operates in the least restrictive mode. Process Profile rules stick to the mode they are in.
+
+    Now, make sure that those Network Rules are setup as described below.
+
+    | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port | Allowed |
+    |:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
+    | pig              | alarmzone             | chicken         | farmyard          | 5000 | V |
+    | rabbit              | charmland             | goat| alarmzone           | 8010  | V |
+
+    Refer to a diagram below for graphical representation:
+    ![Diagram2](https://github.com/oleg-vorobiov-suse/zero-trust-task/blob/master/neuvector_task.png)
+2. Switch al of the groups filtered by `arm` into a Protect/Protect mode.
+### 5. Observe the differences
+**At this point all of the groups that filtered by `arm` should be in Protect/Protect mode.**
+
+This includes:
+* nv.bee.treefarm
+* nv.chicken.farmyard
+* nv.cow.warmfield
+* nv.goat.alarmzone
+* nv.pig.alarmzone
+* nv.rabbit.charmland
+* nv.sheep.warmfield
+
+Now let's try to run this command `cat /etc/os-release` on all of the workloads:
+* `kubectl exec -it --namespace treefarm $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+
+* `kubectl exec -it --namespace farmyard $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+
+* `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=cow -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+
+* `kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=goat -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+
+* `kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+
+* `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+
+* `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=sheep -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+
+
 ## Flag
+{baseOSname:ProcessPath} - of the process that executed successfully but should've been denied
+
+**Example: {opensuse-leap:15.6:/usr/bin/ls}**
 ## Hints
 * -5 points for hint 1. Deploy Farm Services
 * -5 points for 2. Configure Network and Process rules
 * -10 points for flags first word 
 * -10 points for flags second word 
-
-
-| Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port | Allowed |
-|:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
-| chicken              | farmyard             | sheep            | warmfield          | 9000 | V |
-| chicken              | farmyard             | suse.com (external)|                 | 443  | V |
-| chicken              | farmyard             | any other site (external)|               | 443  | X |
-| sheep            | warmfield          | chicken              | farmyard             | 5000 | V |
-| sheep            | warmfield          | cow              | warmfield          | 8090 | V |
-| cow              | warmfield          | sheep            | warmfield          | 9000 | X |
-| cow              | warmfield          | bee             | treefarm        | 8000 | V |
-| bee             | treefarm        | cow              | warmfield          | 8090 | V |
-| bee             | treefarm        | rabbit            | charmland             | 8080 | V |
-| rabbit            | charmland             | bee             | treefarm        | 8000 | X |
-
-See the diagram below for visual representation:
-![alt text](https://github.com/oleg-vorobiov-suse/zero-trust-task/blob/master/neuvector_task.png)
-
-
-
-
 

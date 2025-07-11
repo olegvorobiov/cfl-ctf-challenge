@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: chicken
-        image: olegvorobyov90/kubeconna2024-chicken:v0.4
+        image: olegvorobyov90/challenge-chicken:v0.1
 
 ---
 apiVersion: apps/v1
@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: sheep
-        image: olegvorobyov90/kubeconna2024-sheep:v0.4
+        image: olegvorobyov90/challenge-sheep:v0.1
     
 ---
 apiVersion: apps/v1
@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cow
-        image: olegvorobyov90/kubeconna2024-cow:v0.4
+        image: olegvorobyov90/challenge-cow:v0.1
 
 ---
 apiVersion: apps/v1
@@ -76,7 +76,7 @@ spec:
     spec:
       containers:
       - name: bee
-        image: olegvorobyov90/kubeconna2024-bee:v0.4
+        image: olegvorobyov90/challenge-bee:v0.1
 
 ---
 apiVersion: apps/v1
@@ -96,4 +96,44 @@ spec:
     spec:
       containers:
       - name: rabbit
-        image: olegvorobyov90/kubeconna2024-rabbit:v0.4
+        image: olegvorobyov90/challenge-rabbit:v0.1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pig
+  namespace: alarmzone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pig
+  template:
+    metadata:
+      labels:
+        app: pig
+    spec:
+      containers:
+      - name: pig
+        image: olegvorobyov90/challenge-pig:0.1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goat
+  namespace: alarmzone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goat
+  template:
+    metadata:
+      labels:
+        app: goat
+    spec:
+      containers:
+      - name: goat
+        image: olegvorobyov90/challenge-goat:0.1
