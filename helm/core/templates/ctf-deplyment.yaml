@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctf-setup-neuvector
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: ctf-setup
+    app.kubernetes.io/component: neuvector-bootstrap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ctf-setup
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ctf-setup
+    spec:
+      serviceAccountName: "ctf-job-sa"
+      containers:
+      - name: ctf-setup
+        image: olegvorobyov90/leap-jq-curl-kubectl:0.1
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/bash", "/scripts/script.sh"]
+        volumeMounts:
+        - name: script-volume
+          mountPath: /scripts
+          readOnly: true
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
+      restartPolicy: Always
+      volumes:
+      - name: script-volume
+        configMap:
+          name: ctf-job-script

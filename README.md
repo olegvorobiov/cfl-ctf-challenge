@@ -98,16 +98,16 @@ Your mission, should you choose to accept it, is to:
     
     **FREE HINT:** To filter only the groups related to this challenge type `arm` in filter box.
 
-    | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port | Allowed |
+    | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port (TCP) | Allowed |
     |:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
-    | chicken              | farmyard             | sheep            | warmfield          | 9000 | V |
-    | chicken              | farmyard             | suse.com (external)|                 | 443  | V |
-    | chicken              | farmyard             | any other site (external)|               | 443  | X |
-    | sheep            | warmfield          | chicken              | farmyard             | 5000 | V |
-    | sheep            | warmfield          | cow              | warmfield          | 8090 | V |
-    | cow              | warmfield          | bee             | treefarm        | 8000 | V |
-    | bee             | treefarm        | cow              | warmfield          | 8090 | V |
-    | bee             | treefarm        | rabbit            | charmland             | 8080 | V |
+    | chicken              | farmyard             | sheep            | warmfield          | 9000 | Y |
+    | chicken              | farmyard             | suse.com (external)|                 | 443  | Y |
+    | chicken              | farmyard             | any other site (external)|               | 443  | N |
+    | sheep            | warmfield          | chicken              | farmyard             | 5000 | Y |
+    | sheep            | warmfield          | cow              | warmfield          | 8090 | Y |
+    | cow              | warmfield          | bee             | treefarm        | 8000 | Y |
+    | bee             | treefarm        | cow              | warmfield          | 8090 | Y |
+    | bee             | treefarm        | rabbit            | charmland             | 8080 | Y |
 
     Refer to a diagram below for graphical representation:
     ![Diagram1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram1.png)
@@ -140,10 +140,10 @@ Your mission, should you choose to accept it, is to:
 
     Now, make sure that those Network Rules are setup as described below.
 
-    | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port | Allowed |
+    | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port (TCP) | Allowed |
     |:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
-    | pig              | alarmzone             | chicken         | farmyard          | 5000 | V |
-    | rabbit              | charmland             | goat| alarmzone           | 8010  | V |
+    | pig              | alarmzone             | chicken         | farmyard          | 5000 | Y |
+    | rabbit              | charmland             | goat| alarmzone           | 8010  | Y |
 
     Refer to a diagram below for graphical representation:
     ![Diagram2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram2.png)

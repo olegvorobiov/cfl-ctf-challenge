@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: chicken
-        image: olegvorobyov90/challenge-chicken:v0.1
+        image: olegvorobyov90/challenge-chicken:0.1
 
 ---
 apiVersion: apps/v1
@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: sheep
-        image: olegvorobyov90/challenge-sheep:v0.1
+        image: olegvorobyov90/challenge-sheep:0.1
     
 ---
 apiVersion: apps/v1
@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cow
-        image: olegvorobyov90/challenge-cow:v0.1
+        image: olegvorobyov90/challenge-cow:0.1
 
 ---
 apiVersion: apps/v1
@@ -76,7 +76,7 @@ spec:
     spec:
       containers:
       - name: bee
-        image: olegvorobyov90/challenge-bee:v0.1
+        image: olegvorobyov90/challenge-bee:0.1
 
 ---
 apiVersion: apps/v1
@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
       - name: rabbit
-        image: olegvorobyov90/challenge-rabbit:v0.1
+        image: olegvorobyov90/challenge-rabbit:0.1
 
 ---
 apiVersion: apps/v1
