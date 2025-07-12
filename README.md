@@ -43,7 +43,9 @@ Your mission, should you choose to accept it, is to:
 ### Rancher Desktop
 1. Install Rancher Desktop on your operating system follwoing the instructions from our documentation - https://docs.rancherdesktop.io/getting-started/installation.
 
-    After the installation is completed you will have **helm**, **kubectl**, **rdctl**, and a few more tools installed.
+    **!IMPORTANT!** 
+    
+    After the installation is completed you will have **helm**, **kubectl**, **rdctl**, and a few more tools installed. These utilities are installed in `~/.rd/bin`, check your `$PATH` variable if it contains this string. If not, you can temporary add it by running `export PATH=$PATH:$HOME/.rd/bin`. Remember once you exit the shell session this change will not persist.`
 
 2. Additional configuration for Rancher Desktop:
 
@@ -54,8 +56,10 @@ Your mission, should you choose to accept it, is to:
     b. Disable Traefik
     
     ![rd2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd2.png)
+
+    c. For smoother operation, allocate Rancher Desktop 4CPUs and 8G RAM.
     
-    c. Restart Rancher Desktop
+    d. Restart Rancher Desktop
 ### git
 * Install git based on your operating system - https://git-scm.com/downloads.
 ## Setup
