@@ -24,7 +24,7 @@ while true; do
                 return
             fi
             ((count++))
-            echo "$(date +%Y%m%d_%H%M%S) API is not ready yet
+            echo "$(date +%Y%m%d_%H%M%S) API is not ready yet"
             sleep 1
         done
         echo "$(date +%Y%m%d_%H%M%S) ERROR: Timeout waiting for API"

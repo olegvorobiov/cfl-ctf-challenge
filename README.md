@@ -58,6 +58,8 @@ Your mission, should you choose to accept it, is to:
     ![rd2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd2.png)
 
     c. For smoother operation, allocate Rancher Desktop 4CPUs and 8G RAM.
+
+    ![rd4](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd4.png)
     
     d. Restart Rancher Desktop
 ### git
@@ -81,10 +83,10 @@ Your mission, should you choose to accept it, is to:
 3. Deploy NeuVector to a namespace of your choice, pick the name of the release as you wish:
 
     ```helm install nv -n nv --create-namespace ./helm/core -f ./helm/core/values.yaml --set manager.ingress.host="nv.rd.localhost"```
-4. After installation navigate to Rancher Desktop, go to Port Forwarding and find the webui service and forward it to a port of your choice.
+4. After installation navigate to Rancher Desktop, go to Port Forwarding and find the webui service and forward it to a port `8443`.
 
-    ![rd3](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd3.png)
-5. Open your favorite browser and navigate to https://nv.rd.localhost:[portForward-number]
+    ![rd5](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd5.png)
+5. Open your favorite browser and navigate to https://nv.rd.localhost:8443
 
     Default login:
     * **Username:** `admin`
@@ -98,6 +100,11 @@ Your mission, should you choose to accept it, is to:
 * Ensure the workloads are being deployed successfully
 
 ### 2. Configure Network and Process rules
+
+**!IMPORTANT NOTE:!** 
+
+If you restart Rancher Desktop at any point of this challenge, your progress will reset, and you will need to resume from **THIS STEP HERE:**
+
 1. Given the table below use your kubernetes knowledge to create these Network connections. You should not execute inside the pod. `curl` and `wget` are available within all of the pods. 
     
     **FREE HINT:** To filter only the groups related to this challenge type `arm` in filter box.

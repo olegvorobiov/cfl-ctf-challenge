@@ -2,3 +2,6 @@ NOTES.md
 neuvector_task.drawio
 establish_connections.sh
 kubeconfig.yaml
+deployments.yaml
+namespaces.yaml
+services.yaml
