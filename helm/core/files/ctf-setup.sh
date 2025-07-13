@@ -58,14 +58,14 @@ while true; do
 
     function extend_admin_timeout() {
         echo "$(date +%Y%m%d_%H%M%S) Extending admin session timeout..."
-        curl -k -X PATCH -H "Content-Type: application/json" -H "X-Auth-Token: ${TOKEN}" \
+        curl -k -s -X PATCH -H "Content-Type: application/json" -H "X-Auth-Token: ${TOKEN}" \
             -d '{"config":{"timeout":3600,"username":"admin","fullname":"admin","role":"admin"}}' \
             "https://neuvector-svc-controller-api.${NAMESPACE}.svc.cluster.local:10443/v1/user/admin"
     }
 
     function logout() {
         echo "$(date +%Y%m%d_%H%M%S) Logging out..."
-        curl -k -X DELETE -H "Content-Type: application/json" -H "X-Auth-Token: ${TOKEN}" \
+        curl -k -s -X DELETE -H "Content-Type: application/json" -H "X-Auth-Token: ${TOKEN}" \
             "https://neuvector-svc-controller-api.${NAMESPACE}.svc.cluster.local:10443/v1/auth"
     }
 
