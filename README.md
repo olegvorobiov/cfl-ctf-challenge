@@ -129,11 +129,10 @@ If you restart Rancher Desktop at any point of this challenge, your progress wil
 * You should not be able to execute in any of the pods. Example for bee:
 
     `kubectl exec -it --namespace treefarm $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') -- bash`
-* Rabbit should not be able to talk to bee.
+* Sheep should not be able to talk to rabbit.
 
-    `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- curl bee-svc.treefarm.svc.cluster.local:8000 --max-time 5`
+    `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=sheep -o jsonpath='{.items[*].metadata.name}') -- curl rabbit-svc.charmland.svc.cluster.local:8080 --max-time 5`
     
-    **Oops - rabbit pod doesn't have `curl` in allow list. That is why it failed.**
 * Chicken should be only able to communicate with suse.com, and not any other outside service. If you weren't able to accomplish this - don't worry it doesn't affect the end goal :-)
 
     `kubectl exec -it --namespace farmyard $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') -- curl https://google.com --max-time 5`
@@ -144,56 +143,68 @@ If you restart Rancher Desktop at any point of this challenge, your progress wil
 * Run: ```kubectl apply -f addon-services.yaml```
 * Ensure the workloads are being deployed successfully
 
-### 4. Configure Network and Process rules
-1. Given the table below use your kubernetes knowledge to create these Network connections. You should not execute inside the pod. `curl` and `wget` are available within all of the pods. See the additional rules in the table below.
-
-    **GOOD TO KNOW:** Despite the fact that the farm-services groups are in Protect/Protect mode, the new Network Rules are not still being learned, but allowed to be executed, because NeuVector operates in the least restrictive mode. Process Profile rules stick to the mode they are in.
-
-    Now, make sure that those Network Rules are setup as described below.
-
-    | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port (TCP) | Allowed |
-    |:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
-    | pig              | alarmzone             | chicken         | farmyard          | 5000 | Y |
-    | rabbit              | charmland             | goat| alarmzone           | 8010  | Y |
-
-    Refer to a diagram below for graphical representation:
-    ![Diagram2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram2.png)
-2. Switch al of the groups filtered by `arm` into a Protect/Protect mode.
-### 5. Observe the differences
-**At this point all of the groups that filtered by `arm` should be in Protect/Protect mode.**
-
-This includes:
+### 4. Wrap up and Flags
+1. Keep the groups in the modes they are in right now. This, first set of workloads should be in Protect/Protect mode:
 * nv.bee.treefarm
 * nv.chicken.farmyard
 * nv.cow.warmfield
-* nv.goat.alarmzone
-* nv.pig.alarmzone
 * nv.rabbit.charmland
 * nv.sheep.warmfield
 
-Now let's try to run this command `cat /etc/os-release` on all of the workloads. Try to execute the same command 3-4 times:
-* `for i in {1..10}; do kubectl exec -it --namespace treefarm $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
+    and the following, second set should be in Discover/Discover:
+* nv.goat.alarmzone
+* nv.pig.alarmzone
 
-* `for i in {1..10}; do kubectl exec -it --namespace farmyard $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
+The following table and diagram represent the connections we will attempt to make. 
 
-* `for i in {1..10}; do kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=cow -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
+| Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port (TCP) | Allowed |
+|:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
+| pig              | alarmzone             | chicken         | farmyard          | 5000 | Y |
+| rabbit              | charmland             | goat| alarmzone           | 8010  | Y |
 
-* `for i in {1..10}; do kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=goat -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
+![Diagram2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram2.png)
 
-* `for i in {1..10}; do kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
+2. Run the following commands:
 
-* `for i in {1..10}; do kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
+* `kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') -- curl chicken-svc.farmyard.svc.cluster.local:5000 --max-time 5`
 
-* `for i in {1..10}; do kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=sheep -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
+* `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5`
 
+    **THIS COMMAND WILL RESULT IN FAILURE BY DESIGN**
+    
+    **FLAG #1**
+
+    Rabbit workload is a source of this request. Identify the destination workload and use NeuVector's UI to find out the destination's workload **BaseOS**.
+
+    Click on a Security Event in Notifications => Security Events Tab and add curl to a list of allowed commands.
+
+    Run try to run the last command again:
+
+    `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5` 
+
+    Now you should get a response.
+
+    **FLAGS #2 & #3**
+
+    Now you might notice that not all of the Network Rules have been learned. The reason for that is because how Network Rules are learned when two groups are in different modes within NeuVector.
+
+    Identify the missing Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination?
+
+    **FLAG #2**
+
+    Source NeuVector Group
+
+    **FLAG #3**
+
+    Destination NeuVector Group
 
 ## Flag
-{baseOSname:ProcessPath} - of the process that executed successfully but should've been denied
+{baseOSname:SourceGroupName:DestinationGroupName}
 
-**Example: {opensuse-leap:15.6:/usr/bin/ls}**
+**Example: {opensuse-leap:15.6:nv.ping-warrior.monarch:nv.arcade-server.arcbyte}**
 ## Hints
 * -5 points for hint 1. Deploy Farm Services
 * -5 points for 2. Configure Network and Process rules
 * -10 points for flags first word 
-* -10 points for flags second word 
+* -10 points for flags second and third words 
 
