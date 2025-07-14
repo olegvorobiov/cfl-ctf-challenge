@@ -143,7 +143,7 @@ If you restart Rancher Desktop at any point of this challenge, your progress wil
 * Run: ```kubectl apply -f addon-services.yaml```
 * Ensure the workloads are being deployed successfully
 
-### 4. Wrap up and Flags
+### 4. Wrap up and Flag
 1. Keep the groups in the modes they are in right now. This, first set of workloads should be in Protect/Protect mode:
 * nv.bee.treefarm
 * nv.chicken.farmyard
@@ -155,7 +155,7 @@ If you restart Rancher Desktop at any point of this challenge, your progress wil
 * nv.goat.alarmzone
 * nv.pig.alarmzone
 
-The following table and diagram represent the connections we will attempt to make. 
+The following table and diagram represent the connections we will attempt to make. Please proceed to the next step. 
 
 | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port (TCP) | Allowed |
 |:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
@@ -172,7 +172,7 @@ The following table and diagram represent the connections we will attempt to mak
 
     **THIS COMMAND WILL RESULT IN FAILURE BY DESIGN**
     
-    **FLAG #1**
+    **FLAG part 1**
 
     Rabbit workload is a source of this request. Identify the destination workload and use NeuVector's UI to find out the destination's workload **BaseOS**.
 
@@ -184,21 +184,25 @@ The following table and diagram represent the connections we will attempt to mak
 
     Now you should get a response.
 
-    **FLAGS #2 & #3**
+    **FLAGS parts 2 & 3**
 
     Now you might notice that not all of the Network Rules have been learned. The reason for that is because how Network Rules are learned when two groups are in different modes within NeuVector.
 
     Identify the missing Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination?
 
-    **FLAG #2**
+    **FLAG  part 2**
 
     Source NeuVector Group
 
-    **FLAG #3**
+    **FLAG part 3**
 
     Destination NeuVector Group
 
 ## Flag
+* **Part 1:** BaseOS of the destination of the call that failed in a previous section
+* **Part 2:** Source Group Name for the Rule that haven't been learned
+* **Part 3:** Destination Group Name for the Rule that haven't been learned
+
 {baseOSname:SourceGroupName:DestinationGroupName}
 
 **Example: {opensuse-leap:15.6:nv.ping-warrior.monarch:nv.arcade-server.arcbyte}**
