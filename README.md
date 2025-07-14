@@ -172,19 +172,19 @@ This includes:
 * nv.sheep.warmfield
 
 Now let's try to run this command `cat /etc/os-release` on all of the workloads. Try to execute the same command 3-4 times:
-* `kubectl exec -it --namespace treefarm $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+* `for i in {1..10}; do kubectl exec -it --namespace treefarm $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
 
-* `kubectl exec -it --namespace farmyard $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+* `for i in {1..10}; do kubectl exec -it --namespace farmyard $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
 
-* `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=cow -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+* `for i in {1..10}; do kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=cow -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
 
-* `kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=goat -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+* `for i in {1..10}; do kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=goat -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
 
-* `kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+* `for i in {1..10}; do kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
 
-* `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+* `for i in {1..10}; do kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
 
-* `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=sheep -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release`
+* `for i in {1..10}; do kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=sheep -o jsonpath='{.items[*].metadata.name}') -- cat /etc/os-release; done`
 
 
 ## Flag
