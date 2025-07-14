@@ -184,7 +184,7 @@ The following table and diagram represent the connections we will attempt to mak
 
     Now you should get a response.
 
-    **FLAGS parts 2 & 3**
+    **FLAG parts 2 & 3**
 
     Now you might notice that not all of the Network Rules have been learned. The reason for that is because how Network Rules are learned when two groups are in different modes within NeuVector.
 
