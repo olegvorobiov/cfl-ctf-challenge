@@ -47,6 +47,10 @@ Your mission, should you choose to accept it, is to:
     
     After the installation is completed you will have **helm**, **kubectl**, **rdctl**, and a few more tools installed. These utilities are installed in `~/.rd/bin`, check your `$PATH` variable if it contains this string. If not, you can temporary add it by running `export PATH=$PATH:$HOME/.rd/bin`. Remember once you exit the shell session this change will not persist.`
 
+    **IF YOU ARE ALREADY USING RANCHER DESKTOP**
+
+    Please do a Kubernetes Reset to get a clean environment for the challenge. Navigate to Troubleshooting and Click on Reset Kubernetes, it will take a minute or two to come back up.
+
 2. Additional configuration for Rancher Desktop:
 
     a. Ensure to select a stable version
@@ -83,7 +87,7 @@ Your mission, should you choose to accept it, is to:
 3. Deploy NeuVector to a namespace of your choice, pick the name of the release as you wish:
 
     ```helm install nv -n nv --create-namespace ./helm/core -f ./helm/core/values.yaml --set manager.ingress.host="nv.rd.localhost"```
-4. After installation navigate to Rancher Desktop, go to Port Forwarding and find the webui service and forward it to a port `8443`.
+4. After installation, give it about two minutes for NeuVector to startup, then navigate to Rancher Desktop, go to Port Forwarding and find the webui service and forward it to a port `8443`.
 
     ![rd5](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd5.png)
 5. Open your favorite browser and navigate to https://nv.rd.localhost:8443
