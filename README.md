@@ -70,37 +70,54 @@ Your mission, should you choose to accept it, is to:
 * Install git based on your operating system - https://git-scm.com/downloads.
 ## Setup
 ### Clone the Challenge repo
-1. ```git clone https://github.com/olegvorobiov/cfl-ctf-challenge.git```
+1.  ```git clone https://github.com/olegvorobiov/cfl-ctf-challenge.git```
 2. change directory inside the clonned repo: `cd cfl-ctf-challenge`
 ### Deploy modded NeuVector chart
 
 **NOTE:** before proceeding, ensure that your *kubecontext* is configured to talk to Rancher Desktop cluster.
 
 1. Install ingress-nginx
-
-    ```helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace --version 4.11.2```
+```bash 
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace --version 4.11.2
+```
 
 2. Pick the hostname you want to use to access NeuVector's UI. Example: **nv.rd.localhost**
-    * Add a new entry to your ```/etc/hosts``` file:
+    * Update the existing "localhost" entry to your ```/etc/hosts``` file:
+
+        ```127.0.0.1	localhost```
+
+        To:
 
         ```127.0.0.1	localhost nv.rd.localhost```
+
 3. Deploy NeuVector to a namespace of your choice, pick the name of the release as you wish:
 
-    ```helm install nv -n nv --create-namespace ./helm/core -f ./helm/core/values.yaml --set manager.ingress.host="nv.rd.localhost"```
+```bash
+helm install nv -n nv --create-namespace ./helm/core \
+  -f ./helm/core/values.yaml --set manager.ingress.host="nv.rd.localhost"
+```
+
 4. After installation, give it about two minutes for NeuVector to startup, then navigate to Rancher Desktop, go to Port Forwarding and find the webui service and forward it to a port `8443`.
 
     ![rd5](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/rd5.png)
+
 5. Open your favorite browser and navigate to https://nv.rd.localhost:8443
 
     Default login:
     * **Username:** `admin`
     * **Password:** `admin`
+
 ## Challenges
 ### 1. Deploy Farm Services
 
-**NOTE:** Do not temper with Admission Control Rules themsleves, rather make sure that NeuVector allows that deployment to pass. See the logs.
+**NOTE:** Do not tamper with Admission Control Rules themsleves, rather make sure that NeuVector allows that deployment to pass. See the logs.
 
-* Run: ```kubectl apply -f farm-services.yaml```
+* Run: 
+```bash
+kubectl apply -f farm-services.yaml
+```
 * Ensure the workloads are being deployed successfully
 
 ### 2. Configure Network and Process rules
@@ -126,25 +143,43 @@ If you restart Rancher Desktop at any point of this challenge, your progress wil
 
     Refer to a diagram below for graphical representation:
     ![Diagram1](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram1.png)
+
 2. Switch the groups into a Protect/Protect mode and now try some of these commands:
+
 * Cow should not be able to talk to sheep:
+```bash
+kubectl exec -it --namespace warmfield \
+  $(kubectl get pods --namespace warmfield --selector app=cow -o jsonpath='{.items[*].metadata.name}') \
+  -- curl sheep-svc.warmfield.svc.cluster.local:9000 --max-time 5
+```
 
-    `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=cow -o jsonpath='{.items[*].metadata.name}') -- curl sheep-svc.warmfield.svc.cluster.local:9000 --max-time 5`
 * You should not be able to execute in any of the pods. Example for bee:
+```bash
+kubectl exec -it --namespace treefarm \
+  $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') \
+  -- bash
+```
 
-    `kubectl exec -it --namespace treefarm $(kubectl get pods --namespace treefarm --selector app=bee -o jsonpath='{.items[*].metadata.name}') -- bash`
 * Sheep should not be able to talk to rabbit.
-
-    `kubectl exec -it --namespace warmfield $(kubectl get pods --namespace warmfield --selector app=sheep -o jsonpath='{.items[*].metadata.name}') -- curl rabbit-svc.charmland.svc.cluster.local:8080 --max-time 5`
+```bash
+kubectl exec -it --namespace warmfield \
+  $(kubectl get pods --namespace warmfield --selector app=sheep -o jsonpath='{.items[*].metadata.name}') \
+  -- curl rabbit-svc.charmland.svc.cluster.local:8080 --max-time 5
+```
     
 * Chicken should be only able to communicate with suse.com, and not any other outside service. If you weren't able to accomplish this - don't worry it doesn't affect the end goal :-)
-
-    `kubectl exec -it --namespace farmyard $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') -- curl https://google.com --max-time 5`
-
+```bash
+kubectl exec -it --namespace farmyard \
+  $(kubectl get pods --namespace farmyard --selector app=chicken -o jsonpath='{.items[*].metadata.name}') \
+  -- curl https://google.com --max-time 5
+```
 
 ### 3. Deploy a second set of workloads
 
-* Run: ```kubectl apply -f addon-services.yaml```
+* Run: 
+```bash
+kubectl apply -f addon-services.yaml
+```
 * Ensure the workloads are being deployed successfully
 
 ### 4. Wrap up and Flag
@@ -170,9 +205,19 @@ The following table and diagram represent the connections we will attempt to mak
 
 2. Run the following commands:
 
-* `kubectl exec -it --namespace alarmzone $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') -- curl chicken-svc.farmyard.svc.cluster.local:5000 --max-time 5`
+* 
+```bash 
+kubectl exec -it --namespace alarmzone \
+  $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') \
+  -- curl chicken-svc.farmyard.svc.cluster.local:5000 --max-time 5
+```
 
-* `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5`
+*
+```bash 
+kubectl exec -it --namespace charmland \
+  $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') \
+  -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5
+```
 
     **THIS COMMAND WILL RESULT IN FAILURE BY DESIGN**
     
@@ -183,8 +228,11 @@ The following table and diagram represent the connections we will attempt to mak
     Click on a Security Event in Notifications => Security Events Tab and add curl to a list of allowed commands.
 
     Run try to run the last command again:
-
-    `kubectl exec -it --namespace charmland $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5` 
+```bash
+kubectl exec -it --namespace charmland \
+  $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') \
+  -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5
+```
 
     Now you should get a response.
 
