@@ -215,4 +215,3 @@ The following table and diagram represent the connections we will attempt to mak
 * -5 points for 2. Configure Network and Process rules
 * -10 points for flags first word 
 * -10 points for flags second and third words 
-
