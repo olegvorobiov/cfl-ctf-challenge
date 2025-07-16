@@ -90,7 +90,9 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
         To:
 
-        ```127.0.0.1	localhost nv.rd.localhost```
+        ```bash 
+        127.0.0.1	localhost nv.rd.localhost
+        ```
 
 3. Deploy NeuVector to a namespace of your choice, pick the name of the release as you wish:
 
@@ -204,7 +206,6 @@ The following table and diagram represent the connections we will attempt to mak
 ![Diagram2](https://github.com/olegvorobiov/cfl-ctf-challenge/blob/master/images/diagram2.png)
 
 2. Run the following commands:
-
 * 
 ```bash 
 kubectl exec -it --namespace alarmzone \
@@ -219,36 +220,36 @@ kubectl exec -it --namespace charmland \
   -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5
 ```
 
-    **THIS COMMAND WILL RESULT IN FAILURE BY DESIGN**
-    
-    **FLAG part 1**
+>   **THIS COMMAND WILL RESULT IN FAILURE BY DESIGN**    
+>   **FLAG part 1**
+>
+>   Rabbit workload is a source of this request. Identify the destination workload and use NeuVector's UI to find out the destination's workload **BaseOS**.
+>
+>   Click on a Security Event in Notifications => Security Events Tab and add curl to a list of allowed commands.
 
-    Rabbit workload is a source of this request. Identify the destination workload and use NeuVector's UI to find out the destination's workload **BaseOS**.
+ *   Run try to run the last command again:
 
-    Click on a Security Event in Notifications => Security Events Tab and add curl to a list of allowed commands.
-
-    Run try to run the last command again:
 ```bash
 kubectl exec -it --namespace charmland \
   $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') \
   -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5
 ```
 
-    Now you should get a response.
-
-    **FLAG parts 2 & 3**
-
-    Now you might notice that not all of the Network Rules have been learned. The reason for that is because how Network Rules are learned when two groups are in different modes within NeuVector.
-
-    Identify the missing Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination?
-
-    **FLAG  part 2**
-
-    Source NeuVector Group
-
-    **FLAG part 3**
-
-    Destination NeuVector Group
+>    Now you should get a response.
+>
+>    **FLAG parts 2 & 3**
+>
+>    Now you might notice that not all of the Network Rules have been learned. The reason for that is because how Network Rules are learned when two groups are in different modes within NeuVector.
+>
+>    Identify the missing Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination?
+>
+>    **FLAG  part 2**
+>
+>    Source NeuVector Group
+>
+>    **FLAG part 3**
+>
+>    Destination NeuVector Group
 
 ## Flag
 * **Part 1:** BaseOS of the destination of the call that failed in a previous section
