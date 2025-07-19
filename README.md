@@ -118,7 +118,7 @@ helm install nv -n nv --create-namespace ./helm/core \
 ## Challenges
 ### 1. Deploy Farm Services
 
-**NOTE:** Do not tamper with Admission Control Rules themsleves, rather make sure that NeuVector allows that deployment to pass. See the logs.
+**NOTE:** DO NOT tamper with Admission Control Rules themsleves. DO NOT disable Admission Control Rules, rather make sure that NeuVector allows that deployment to pass. See the logs.
 
 * Run: 
 ```bash
@@ -134,11 +134,11 @@ Navigate to Notifications => Risk Reports to see Admission Control related error
 
 ### 2. Configure Network and Process rules
 
-**!IMPORTANT NOTE:!** 
+**IMPORTANT NOTE:** 
 
 If you restart Rancher Desktop at any point of this challenge, your progress will reset, and you will need to resume from **THIS STEP HERE:**
 
-1. Given the table below use your kubernetes knowledge to create these Network connections. You should not execute inside the pod. `curl` and `wget` are available within all of the pods. 
+1. Given the table below use your kubernetes knowledge to create these Network connections. You should not execute inside the pod. `curl` is available within all of the pods. 
     
     <details>
     <summary>Free Hint</summary>
@@ -200,19 +200,20 @@ This command will result in partial failure.
 <summary>Free Hint</summary>
 Navigate to Notifications => Risk Reports to see Admission Control related errors
 </details>
+
 * Ensure the workloads are being deployed successfully
 
 ### 4. Wrap up and Flag
 1. Keep the groups in the modes they are in right now. This, first set of workloads should be in Protect/Protect mode:
-* nv.bee.treefarm
-* nv.chicken.farmyard
-* nv.cow.warmfield
-* nv.rabbit.charmland
-* nv.sheep.warmfield
+* **nv.bee.treefarm**
+* **nv.chicken.farmyard**
+* **nv.cow.warmfield**
+* **nv.rabbit.charmland**
+* **nv.sheep.warmfield**
 
     and the following, second set should be in Discover/Discover:
-* nv.goat.alarmzone
-* nv.pig.alarmzone
+* **nv.goat.alarmzone**
+* **nv.pig.alarmzone**
 
 The following table and diagram represent the connections we will attempt to make. Please proceed to the next step. 
 
@@ -230,6 +231,9 @@ kubectl exec -it --namespace alarmzone \
   $(kubectl get pods --namespace alarmzone --selector app=pig -o jsonpath='{.items[*].metadata.name}') \
   -- curl chicken-svc.farmyard.svc.cluster.local:5000 --max-time 5
 ```
+This command should succeed and you would get a following message:
+
+**Bawk bawk! Welcome to the farmyard - I'm pecking away at your requests with farm-fresh efficiency!**
 
 *
 ```bash 
@@ -238,10 +242,10 @@ kubectl exec -it --namespace charmland \
   -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5
 ```
 
->   **THIS COMMAND WILL RESULT IN FAILURE BY DESIGN**    
+>   **THIS COMMAND SHOULD RESULT IN FAILURE BY DESIGN**    
 >   **FLAG part 1**
 >
->   Rabbit workload is a source of this request. Identify the destination workload and use NeuVector's UI to find out the destination's workload **BaseOS**.
+>   Rabbit workload is a source of this request. Identify the **destination** workload and use NeuVector's UI to find out the **destination's** workload **BaseOS**.
 >
 >   Click on a Security Event in Notifications => Security Events Tab and add curl to a list of allowed commands.
 
@@ -252,14 +256,15 @@ kubectl exec -it --namespace charmland \
   $(kubectl get pods --namespace charmland --selector app=rabbit -o jsonpath='{.items[*].metadata.name}') \
   -- curl goat-svc.alarmzone.svc.cluster.local:8010 --max-time 5
 ```
+Now you should get a response that will look like this:
 
->    Now you should get a response.
->
+**Meh-eh-eh! I'm the G.O.A.T. of alarm handling - no need to panic, I've got your requests covered!**
+
 >    **FLAG parts 2 & 3**
 >
 >    Now you might notice that not all of the Network Rules have been learned. The reason for that is because how Network Rules are learned when two groups are in different modes within NeuVector.
 >
->    Identify the missing Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination?
+>    Identify the **missing** Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination?
 >
 >    **FLAG  part 2**
 >
@@ -271,7 +276,7 @@ kubectl exec -it --namespace charmland \
 
 <details>
 <summary>Free Hint</summary>
-Consult the last diagram for all of the Network Rules. Navigate to Policy => Network Rules and find the missing rule. Disregard anything **coredns** related.
+Consult the last diagram for all of the Network Rules. Navigate to Policy => Network Rules and find the missing rule. Disregard anything "coredns" related.
 </details>
 
 ## Flag
@@ -285,5 +290,5 @@ Consult the last diagram for all of the Network Rules. Navigate to Policy => Net
 ## Hints
 * -5 points for hint 1. Deploy Farm Services
 * -5 points for 2. Configure Network and Process rules
-* -10 points for flags first word 
-* -10 points for flags second and third words 
+* -10 points for Flag's first word 
+* -10 points for Flag's second and third words 
