@@ -126,8 +126,8 @@ kubectl apply -f farm-services.yaml
 ```
 This command will result in partial failure.
 <details>
-<summary>Find the cause of the issue</summary>
-Navigate to Notifications => Risk Reports to see related errors
+<summary>Free Hint</summary>
+Navigate to Notifications => Risk Reports to see Admission Control related errors
 </details>
 
 * Ensure the workloads are being deployed successfully
@@ -140,7 +140,10 @@ If you restart Rancher Desktop at any point of this challenge, your progress wil
 
 1. Given the table below use your kubernetes knowledge to create these Network connections. You should not execute inside the pod. `curl` and `wget` are available within all of the pods. 
     
-    **FREE HINT:** To filter only the groups related to this challenge type `arm` in filter box.
+    <details>
+    <summary>Free Hint</summary>
+    To filter only the groups related to this challenge type `arm` in filter box. Filter box is in the top right corner of the Policy => Groups section
+    </details>
 
     | Source Deployment | Source Namespace | Target Deployment | Target Namespace | Port (TCP) | Allowed |
     |:-----------------:|:----------------:|:-----------------:|:----------------:|:----:|:-------:|
@@ -192,6 +195,11 @@ kubectl exec -it --namespace farmyard \
 ```bash
 kubectl apply -f addon-services.yaml
 ```
+This command will result in partial failure.
+<details>
+<summary>Free Hint</summary>
+Navigate to Notifications => Risk Reports to see Admission Control related errors
+</details>
 * Ensure the workloads are being deployed successfully
 
 ### 4. Wrap up and Flag
@@ -260,6 +268,11 @@ kubectl exec -it --namespace charmland \
 >    **FLAG part 3**
 >
 >    Destination NeuVector Group
+
+<details>
+<summary>Free Hint</summary>
+Consult the last diagram for all of the Network Rules. Navigate to Policy => Network Rules and find the missing rule. Disregard anything **coredns** related.
+</details>
 
 ## Flag
 * **Part 1:** BaseOS of the destination of the call that failed in a previous section
