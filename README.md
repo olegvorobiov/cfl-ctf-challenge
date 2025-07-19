@@ -262,7 +262,7 @@ Now you should get a response that will look like this:
 **Meh-eh-eh! I'm the G.O.A.T. of alarm handling - no need to panic, I've got your requests covered!**
 
 | **FLAG parts 2 & 3** |
-|:---:|
+|:---|
 | Now you might notice that not all of the **Network Rules** have been learned. The reason for that is because how **Network Rules** are learned when two groups are in different modes within NeuVector. |
 | Identify the **missing** Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination? |
 
