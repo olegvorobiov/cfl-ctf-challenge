@@ -248,7 +248,7 @@ kubectl exec -it --namespace charmland \
 | **FLAG part 1** |
 |:---:|
 | Rabbit workload is a source of this request. Identify the **destination** workload and use NeuVector's UI to find out the **destination's** workload **BaseOS**. |
-| Click on a Security Event in Notifications => Security Events Tab and add curl to a list of allowed commands. |
+| Click on a **Security Event** in **Notifications** => **Security Events** Tab and add `curl` to a list of allowed commands. |
 
  *   Run the last command again:
 
@@ -263,11 +263,11 @@ Now you should get a response that will look like this:
 
 | **FLAG parts 2 & 3** |
 |:---:|
-| Now you might notice that not all of the Network Rules have been learned. The reason for that is because how Network Rules are learned when two groups are in different modes within NeuVector. |
+| Now you might notice that not all of the **Network Rules** have been learned. The reason for that is because how **Network Rules** are learned when two groups are in different modes within NeuVector. |
 | Identify the **missing** Network Rule. If you would to build the rule yourself, which group will be the source and which one would be the destination? |
 
 | **FLAG  part 2** |
-|:---:|
+|:---|
 | Source NeuVector Group |
 | **FLAG part 3** |
 | Destination NeuVector Group |
@@ -279,7 +279,7 @@ Consult the last diagram for all of the Network Rules. Navigate to Policy => Net
 
 ## Flag
 | **Part 1:** | BaseOS of the destination of the call that failed in a previous section |
-|:---:|:---:|
+|:---|:---|
 | **Part 2:** | Source Group Name for the Rule that haven't been learned | 
 | **Part 3:** | Destination Group Name for the Rule that haven't been learned | 
 
