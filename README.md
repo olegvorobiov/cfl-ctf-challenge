@@ -281,8 +281,8 @@ Consult the last diagram for all of the Network Rules. Navigate to Policy => Net
 |FLAG| |
 |:---|:---|
 | **Part 1:** | BaseOS of the destination of the call that failed in a previous section |
-| **Part 2:** | Source Group Name for the Rule that haven't been learned | 
-| **Part 3:** | Destination Group Name for the Rule that haven't been learned | 
+| **Part 2:** | Source Group Name for the Rule that hasn't been learned | 
+| **Part 3:** | Destination Group Name for the Rule that hasn't been learned | 
 | Final Result |**{baseOSname:SourceGroupName:DestinationGroupName}**|
 
 **Example: {opensuse-leap:15.6:nv.ping-warrior.monarch:nv.arcade-server.arcbyte}**
