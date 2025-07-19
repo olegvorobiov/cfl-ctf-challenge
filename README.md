@@ -82,6 +82,10 @@ helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
   --namespace ingress-nginx --create-namespace --version 4.11.2
 ```
+Ensure that ingress-nginx pods are running:
+```bash
+kubectl get pods -n ingress-nginx
+```
 
 2. Pick the hostname you want to use to access NeuVector's UI. Example: **nv.rd.localhost**
     * Update the existing "localhost" entry to your ```/etc/hosts``` file:
@@ -120,6 +124,12 @@ helm install nv -n nv --create-namespace ./helm/core \
 ```bash
 kubectl apply -f farm-services.yaml
 ```
+This command will result in partial failure.
+<details>
+<summary>Find the cause of the issue</summary>
+Navigate to Notifications => Risk Reports to see related errors
+</details>
+
 * Ensure the workloads are being deployed successfully
 
 ### 2. Configure Network and Process rules

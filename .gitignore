@@ -5,3 +5,4 @@ kubeconfig*
 deployments.yaml
 namespaces.yaml
 services.yaml
+test.sh
