@@ -285,5 +285,5 @@ Consult the last diagram for all of the Network Rules. Navigate to Policy => Net
 | **Part 3:** | Destination Group Name for the Rule that hasn't been learned | 
 | Final Result |**{baseOSname:SourceGroupName:DestinationGroupName}**|
 
-**Example: {opensuse-leap:15.6:nv.ping-warrior.monarch:nv.arcade-server.arcbyte}**
+**Example: flag{opensuse-leap:15.6:nv.ping-warrior.monarch:nv.arcade-server.arcbyte}**
 
