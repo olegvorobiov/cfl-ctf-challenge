@@ -286,8 +286,4 @@ Consult the last diagram for all of the Network Rules. Navigate to Policy => Net
 | Final Result |**{baseOSname:SourceGroupName:DestinationGroupName}**|
 
 **Example: {opensuse-leap:15.6:nv.ping-warrior.monarch:nv.arcade-server.arcbyte}**
-## Hints
-* -5 points for hint 1. Deploy Farm Services
-* -5 points for 2. Configure Network and Process rules
-* -10 points for Flag's first word 
-* -10 points for Flag's second and third words 
+
