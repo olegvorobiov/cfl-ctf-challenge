@@ -248,7 +248,8 @@ kubectl exec -it --namespace charmland \
 | **FLAG part 1** |
 |:---:|
 | Rabbit workload is a source of this request. Identify the **destination** workload and use NeuVector's UI to find out the **destination's** workload **BaseOS**. |
-| Click on a **Security Event** in **Notifications** => **Security Events** Tab and add `curl` to a list of allowed commands. |
+
+ * Click on a **Security Event** in **Notifications** => **Security Events** Tab and add `curl` to a list of allowed commands.
 
  *   Run the last command again:
 
