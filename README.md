@@ -41,7 +41,7 @@ Your mission, should you choose to accept it, is to:
 
 ## Pre-requisites
 ### Rancher Desktop
-1. Install Rancher Desktop on your operating system follwoing the instructions from our documentation - https://docs.rancherdesktop.io/getting-started/installation.
+1. Install Rancher Desktop on your operating system following the instructions from our documentation - https://docs.rancherdesktop.io/getting-started/installation.
 
     **!IMPORTANT!** 
     
